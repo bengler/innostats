@@ -1,0 +1,333 @@
+body {
+  font-family: "Helvetica Neue";
+  overflow: hidden;
+  background-color: #101014;
+  margin: 0px auto;
+  translate3d(0,0,0);
+}
+
+header {
+  position: fixed;
+  padding: 10px 20px 10px 20px;
+  z-index: 1500;
+  height: 20px;
+}
+
+header span {
+  color: #aaa;
+  text-decoration: underline;
+}
+
+
+header .selected {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+#controls {
+  top: 40px;
+  width: 729px;
+  padding-left: 10px;
+  padding-top: 10px;
+  overflow: hidden;
+  z-index: 100;
+  position: fixed;
+}
+
+footer {
+  position: fixed;
+  bottom: 5px;
+  font-size: 12px;
+  color: #666;
+  z-index: 100;
+}
+
+footer a {
+  color: #999;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 24px;
+  letter-spacing: -0.021em;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+#totals.title {
+  position: fixed;
+  left: 740px;
+  top: 45px;
+  color: #fff;
+  width: 400px;
+  font-weight: 800;
+  width: 100%;
+}
+
+.sum-total {
+  float: right;
+}
+
+#body > p {
+  line-height: 1.5em;
+  width: 640px;
+  text-rendering: optimizeLegibility;
+}
+
+#charts {
+  padding: 10px 0;
+  z-index: 100;
+}
+
+#date-chart {
+  margin-top: 20px;
+}
+
+.chart {
+  display: inline-block;
+  height: 190px;
+  margin-bottom: 0px;
+}
+
+.reset {
+  position: absolute;
+  margin-top: -3px;
+  padding: 3px;
+  font-size: smaller;
+  font-weight: 900;
+  text-transform: uppercase;
+  right: 0px;
+  color: #611;
+  background-color: #d33;
+  text-decoration: none;
+  border-radius: 2.5px;
+  font-size: 10px;
+  text-shadow: 0px 1px 0px #f66;
+  border-bottom: 2px solid #611;
+}
+
+.reset a {
+  text-decoration: none;
+}
+
+.background.bar {
+  fill: #ccc;
+}
+
+.foreground.bar {
+  fill: #009fb4;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #666;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font: 10px sans-serif;
+  fill: #666;
+}
+
+.brush rect.extent {
+  fill: #5af;
+  fill-opacity: .085;
+}
+
+.brush .resize path {
+  fill: #eee;
+  stroke: #666;
+  stroke-width: 1px;
+}
+
+.chart div {
+  width: 330px;
+}
+
+#lists {
+  z-index: 10;
+}
+
+#grant-list {
+  top: 72px;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+  height: 100%;
+  border-left: 750px solid transparent;
+  box-sizing: border-box;
+  overflow: scroll;
+
+  position: fixed;
+  font-size: smaller;
+  clear: both;
+}
+
+#grant-list .grant {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+#grant-list .grant:nth-child(odd) {
+  background: #181818
+}
+
+#grant-list .grant div {
+  display: block;
+  float: left;
+  overflow: hidden;
+  height: 25px;
+  line-height: 33px;
+}
+
+#grant-list .grant div.client {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  margin-left: 10px;
+  margin-right: 90px;
+  float: none;
+}
+
+#grant-list .grant div.client a {
+  color: #aaa;
+  text-decoration: none;
+  text-decoration-color: #aaa;
+}
+
+#grant-list .grant div.grant-sum {
+  color: #fff;
+  text-align: right;
+  margin-right: 10px;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-weight: 800;
+}
+
+#grant-list .grant div.loan-status, #grant-list .grant div.nace-code, #grant-list .grant div.nace-desc {
+  float: none;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 13px;
+  color: #555;
+  height: 21px;
+}
+
+#grant-list .grant div.loan-status {
+  width: 50px;
+  clear: left;
+  margin-left: 10px;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+#grant-list .grant div.nace-code, #grant-list .grant div.nace-desc {
+  font-size: 10px;
+}
+
+#grant-list .grant div.nace-code {
+  font-size: 10px;
+  padding-right: 5px;
+}
+
+#grant-list .grant div.nace-desc {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+}
+
+#grant-list .grant div.nace-desc.warning, #grant-list .grant div.nace-code.warning {
+  color: #caa;
+}
+
+#grant-list .is-loan {
+  color: #50a9b5;
+}
+
+.title {
+  position: relative;
+  color: #aaa;
+  margin-left: 12px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+#right-column {
+  float: left;
+  padding: 10px 10px;
+}
+
+#right-column .title {
+  margin-left: 0px;
+  margin-bottom: 10px;
+}
+
+#map-container {
+}
+
+
+#map .title small {
+  color: #ccc;
+  font-size: smaller;
+}
+
+#map {
+  border: 1px solid #000;
+  width: 350px;
+  height: 370px;
+}
+
+#map path {
+  stroke-width: 0.2px;
+  stroke: #666;
+  opacity: 0.8;
+}
+
+#nace-icicle {
+  opacity: 0.95;
+  height: 240px;
+  z-index: -1;
+}
+
+#nace-icicle .reset {
+  margin-right: 15px;
+ }
+
+.toggleIcicleHeight {
+  cursor: pointer;
+  color: #eee;
+}
+
+.icicleChart {
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 11px;
+  margin-bottom: 20px;
+}
+
+.icicleChart rect {
+  stroke: none;
+  fill-opacity: 0.85;
+/*  fill: #009fb4;
+*/  cursor: pointer;
+}
+
+.icicleChart text {
+  pointer-events: none;
+}
+

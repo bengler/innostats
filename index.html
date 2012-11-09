@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Innovation Norway</title>
+
+<link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/leaflet.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/colorbrewer.css" rel="stylesheet" type="text/css" />
+<!--
+<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
+ -->
+<div id="body">
+
+  <header>
+    <h1>Innovation Norway
+      <span class="grantTypeSelector selected" id="grantSelector">Grants</span>
+      and 
+      <span class="grantTypeSelector" id="loanSelector">Loans</span> 
+    </h1>
+  </header>
+
+  <div id="totals" class="title">
+    <span id="active">-</span> selected – 
+    <span id="sum-total"></span> NOK
+  </div>
+
+  <div id="controls">
+    <div id="nace-icicle-container">
+      <div id="nace-icicle">
+        <div class="title"><span class="toggleIcicleHeight"><span class="icicleHeightIndicator">►</span> Economic activities</span>
+        </div>
+      </div>
+    </div>
+    <div id="right-column">
+      <div id="map-container">
+        <div class="title">Geographical distribution <span id="filtered-municipality"></span></div>
+        <div id="map"></div>
+      </div>
+    </div>
+    <div id="charts">
+      <div id="gratSum-chart" class="chart">
+        <div class="title">Sum</div>
+      </div>
+      <div id="date-chart" class="chart">
+        <div class="title">Year</div>
+      </div>
+    </div>
+    <footer>
+      Crossfilter <a href="http://twitter.com/mbostock">@mbostock</a> / <a href="http://squareup.com">Square, Inc.</a> – Municipal boundaries from the Norwegian Mapping Authority
+    </footer>
+  </div>
+
+  <div id="lists">
+    <div id="grant-list" class="list"></div>
+  </div>
+
+</div>
+<script src="assets/js/jquery-1.7.2.min.js"></script>
+<script src="assets/js/crossfilter.min.js"></script>
+<script src="assets/js/colorbrewer.js"></script>
+<script src="assets/js/d3.v2.min.js"></script>
+<script src="assets/js/leaflet.js"></script>
+<script src="assets/js/wax.leaf.min.js"></script>
+<script src="assets/js/underscore-min.js"></script>
+<script src="assets/js/icicle.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/map.js"></script>
