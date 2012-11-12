@@ -34,7 +34,7 @@ window.mapChart = function () {
   return {
       load: function() {
         var that = this;
-        d3.json("sanitized_data/municipalities_no_oceans.geojson", function(json) {
+        d3.json("sanitized_data/municipalities_no_oceans.json", function(json) {
 
           function project(x) {
             var point = map.latLngToLayerPoint(new L.LatLng(x[1], x[0]));
