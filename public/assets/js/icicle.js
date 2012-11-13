@@ -73,10 +73,10 @@ window.icicle = function () {
 
   function label(d) {
     var code = d.code;
-    if (code.match(/0\d$/)) {
+    if (code.match(/^0\d$/)) {
       code = code.charAt(1);
     }
-    var name = naceDescriptions[code] || "EVERYTHING";
+    var name = code + ":" + naceDescriptions[code]  || "EVERYTHING";
     return name;
   }
 
@@ -150,6 +150,7 @@ window.icicle = function () {
       //     .on("click", function() { click(naceHierarchy); });
     },
     click: function(d) {
+      console.info(d);
       if (d !== rootNode) {
         if (chosenNode == rootNode) {
           d3.select("#nace-icicle-container .title a")
