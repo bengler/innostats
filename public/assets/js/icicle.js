@@ -76,7 +76,7 @@ window.icicle = function () {
     if (code.match(/^0\d$/)) {
       code = code.charAt(1);
     }
-    var name = code + ":" + naceDescriptions[code]  || "EVERYTHING";
+    var name = naceDescriptions[code]  || "EVERYTHING";
     return name;
   }
 
