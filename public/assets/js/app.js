@@ -133,7 +133,7 @@ var funds = function() {
     });
 
     var lazyMap = _.debounce(mapChart.renderMap, 10),
-        lazyIcicle = _.debounce(icicle.update, 100);
+        lazyIcicle = _.debounce(icicle.update, 400);
 
     var charts = [
       barChart()
@@ -191,7 +191,7 @@ var funds = function() {
     };
 
     function grantList(div) {
-      var grants = grantSum.top(100);
+      var grants = grantSum.top(200);
 
       div.each(function() {
         var grant = d3.select(this).selectAll(".grant")
