@@ -134,5 +134,4 @@ window.mapChart = function () {
       }
   };
 }();
-
 mapChart.load();

@@ -50,11 +50,11 @@ window.icicle = function () {
     h = newHeight;
     d3.selectAll('#nace-icicle-container')
       .transition()
-      .duration(900)
+      .duration(200)
       .style("height", h + 40 + "px");
     d3.selectAll('.icicleChart svg')
       .transition()
-      .duration(900)
+      .duration(200)
       .style("height", h + "px");
     x = d3.scale.linear().range([0, w]),
     y = d3.scale.linear().range([0, h]);
@@ -103,7 +103,7 @@ window.icicle = function () {
   }
 
   function rectColor(d) {
-    var val = (d3.hsl(180 + (+lowerBoundary(d)) * 2.1, 0.9 / (d.depth / 1.5) , 0.80 * (1- (d.depth / 12))).rgb());
+    var val = (d3.hsl(180 + (+lowerBoundary(d)) * 2.1, 0.6 / (d.depth / 1.5) , 0.90 * (1- (d.depth / 12))).rgb());
     return val
   }
 
@@ -146,11 +146,14 @@ window.icicle = function () {
       g.append("svg:title")
         .text(label);
 
-      // d3.select(window)
-      //     .on("click", function() { click(naceHierarchy); });
+      vis.style("opacity", "0")
+        .transition()
+          .duration(200)
+          .style("opacity", "1");
+
+
     },
     click: function(d) {
-      console.info(d);
       if (d !== rootNode) {
         if (chosenNode == rootNode) {
           d3.select("#nace-icicle-container .title a")
@@ -173,15 +176,16 @@ window.icicle = function () {
         return
       }
 
+      if (chosenNode === undefined) {
+        return
+      }
+
       var partition = d3.layout.partition()
         .value(naceValue)
         .internal_value(naceValue);
 
       d = chosenNode;
-
       vis.selectAll("g").data(partition.nodes(naceHierarchy), function(d) { return d["case"]; });
-
-      d = chosenNode;
 
       kx = (d.y ? w - 40 : w) / (1 - d.y);
       ky = h / d.dx;

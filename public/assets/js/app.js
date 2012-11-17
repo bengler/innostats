@@ -12,9 +12,55 @@ $.when(grantsLoaded, mapLoaded).then(function() { renderAll(); });
 
 var funds = function() {
 
-  chartWidth = 330;
 
-  d3.csv("sanitized_data/funds.csv", function(grants) {
+  var width = 960,
+      height = 500,
+      twoPi = 2 * Math.PI,
+      progress = 0,
+      total = 1308573, // must be hard-coded if server doesn't report Content-Length
+      formatPercent = d3.format(".0%");
+
+  var arc = d3.svg.arc()
+      .startAngle(0)
+      .innerRadius(60)
+      .outerRadius(90);
+
+  var svg = d3.select("body").append("svg")
+      .attr("class", "progress-meter-svg")
+      .attr("width", width)
+      .attr("height", height)
+    .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  var meter = svg.append("g")
+      .attr("class", "progress-meter");
+
+  meter.append("path")
+      .attr("class", "background")
+      .attr("d", arc.endAngle(twoPi));
+
+  var foreground = meter.append("path")
+      .attr("class", "foreground");
+
+  var text = meter.append("text")
+      .attr("text-anchor", "middle")
+      .attr("dy", ".35em");
+
+  var chartWidth = 330;
+
+  d3.csv("sanitized_data/funds.csv")
+    .on("progress", function() {
+      var i = d3.interpolate(progress, d3.event.loaded / total);
+      d3.transition().tween("progress", function() {
+        return function(t) {
+          progress = i(t);
+          foreground.attr("d", arc.endAngle(twoPi * progress));
+          text.text(formatPercent(progress));
+        };
+      });
+    })
+  .get(function(error, grants) {
+    meter.transition().delay(250).attr("transform", "scale(0)");
 
     // Various formatters
     var formatNumber = d3.format(",d"),
@@ -33,7 +79,6 @@ var funds = function() {
       d.naceDesc = naceDescriptions[d.nace];
       d.index = i;
     });
-
 
     // Create the crossfilter for the relevant dimensions and groups.
     var grant = crossfilter(grants),
@@ -117,7 +162,6 @@ var funds = function() {
     window.grantKind = grantKind;
     grantKind.filter(false);
 
-
     d3.select('#grantSelector').on("click", function(d,i) {
       d3.select('#grantSelector').classed("selected", true);
       d3.select('#loanSelector').classed("selected", false);
@@ -132,8 +176,9 @@ var funds = function() {
       renderAll();
     });
 
-    var lazyMap = _.debounce(mapChart.renderMap, 10),
-        lazyIcicle = _.debounce(icicle.update, 400);
+    var brushing = false;
+
+    var lazyMap = _.debounce(mapChart.renderMap, 20);
 
     var charts = [
       barChart()
@@ -158,6 +203,15 @@ var funds = function() {
         .data(charts)
         .each(function(chart) { chart.on("brush", renderAll).on("brushend", renderAll); });
 
+
+    d3.selectAll(".title")
+      .style("display", "block")
+      .style("opacity", "0")
+      .transition()
+        .duration(400)
+        .style("opacity", "1");
+
+
     // Render the initial lists.
     var list = d3.selectAll(".list")
         .data([grantList]);
@@ -173,9 +227,10 @@ var funds = function() {
       list.each(render);
       d3.select("#active").text(formatNumber(all.value()));
       d3.select("#sum-total").text(formatNumber(sumTotal.value().grants + sumTotal.value().loans));
-      // d3.selectAll("#total").text(formatNumber(grantKinds.size()));
       lazyMap();
-      lazyIcicle();
+      if (!brushing) {
+        icicle.update();
+      }
     }
 
     window.renderAll = renderAll;
@@ -268,6 +323,11 @@ var funds = function() {
               .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+            g.style("opacity", "0")
+              .transition()
+                .duration(400)
+                .style("opacity", "1");
+
             g.append("clipPath")
                 .attr("id", "clip-" + id)
               .append("rect")
@@ -342,6 +402,7 @@ var funds = function() {
       }
 
       brush.on("brushstart.chart", function() {
+        brushing = true;
         var div = d3.select(this.parentNode.parentNode.parentNode);
         div.select(".title a").style("display", null);
       });
@@ -360,6 +421,7 @@ var funds = function() {
       });
 
       brush.on("brushend.chart", function() {
+        brushing = false;
         if (brush.empty()) {
           var div = d3.select(this.parentNode.parentNode.parentNode);
           div.select(".title a").style("display", "none");
@@ -426,6 +488,8 @@ var funds = function() {
 
       return d3.rebind(chart, brush, "on");
     }
+
     grantsLoaded.resolve();
+
   });
 }();

@@ -1,9 +1,10 @@
 body {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   overflow: hidden;
   background-color: #101014;
   margin: 0px auto;
   translate3d(0,0,0);
+  height: 1000px;
 }
 
 header {
@@ -13,16 +14,6 @@ header {
   height: 20px;
 }
 
-header span {
-  color: #aaa;
-  text-decoration: underline;
-}
-
-
-header .selected {
-  color: #fff;
-  text-decoration: none;
-}
 
 
 #controls {
@@ -36,11 +27,14 @@ header .selected {
 }
 
 footer {
+  opacity: 0.8;
   position: fixed;
-  bottom: 5px;
+  bottom: 0px;
   font-size: 12px;
   color: #666;
-  z-index: 100;
+  z-index: 1000;
+  background-color: rgba(20,20,20,0.8);
+  padding: 5px 5px;
 }
 
 footer a {
@@ -49,14 +43,45 @@ footer a {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 21px;
   letter-spacing: -0.021em;
-  font-weight: 600;
+  font-weight: 300;
   margin-top: 0;
   margin-bottom: 0;
   color: #fff;
   text-transform: uppercase;
 }
+
+h1 a {
+  text-decoration: none;
+  cursor: text;
+}
+
+h1 .grantTypeSelector {
+  display: inline-block;
+  background-color: rgba(20,20,20,1);
+  padding: 3px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #777;
+  border: 1px solid #333;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 2px 1px rgba(10,10,10,.5);
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+h1 .grantTypeSelector.selected {
+  color: #fff;
+  text-decoration: none;  
+  cursor: text;
+  background-color: rgba(50,90,120,0.5);
+}
+
 
 #totals.title {
   position: fixed;
@@ -85,6 +110,30 @@ h1 {
 
 #date-chart {
   margin-top: 20px;
+}
+
+.progress-meter-svg {
+  position: absolute;
+  top: 100px;
+  margin: 0 auto;
+}
+
+.progress-meter {
+}
+
+.progress-meter .background {
+  fill: #444;
+}
+
+.progress-meter .foreground {
+  fill: #666;
+}
+
+.progress-meter text {
+  fill: #888;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .chart {
@@ -261,6 +310,7 @@ h1 {
 }
 
 .title {
+  display: none;
   position: relative;
   color: #aaa;
   margin-left: 12px;
@@ -282,6 +332,9 @@ h1 {
 #map-container {
 }
 
+.leaflet-container {
+  background: inherit;
+}
 
 #map .title small {
   color: #ccc;
@@ -295,13 +348,13 @@ h1 {
 }
 
 #map path {
-  stroke-width: 0.2px;
-  stroke: #666;
-  opacity: 0.8;
+  stroke-width: 0.4px;
+  stroke: #333;
+  opacity: 1;
 }
 
 #nace-icicle {
-  opacity: 0.95;
+  opacity: 1;
   height: 240px;
   z-index: -1;
 }
@@ -324,7 +377,7 @@ h1 {
 
 .icicleChart rect {
   stroke: none;
-  fill-opacity: 0.85;
+  fill-opacity: 1;
 /*  fill: #009fb4;
 */  cursor: pointer;
 }
