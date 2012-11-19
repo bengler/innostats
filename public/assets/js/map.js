@@ -71,11 +71,11 @@ window.mapChart = function () {
               that.toggleFilter(d,i, this);
             })
             .on("mouseover", function(d,i) {
-              d3.select(this).style("stroke-width", "0.8");
+              d3.select(this).style("stroke-width", "1.2");
               d3.event.x;
             })
             .on("mouseout", function(d,i) {
-              d3.select(this).style("stroke-width", "0.1"); });
+              d3.select(this).style("stroke-width", "0.2"); });
             // .append("svg:title")
             //   .text(function(d) { return d.properties.NAVN; });
 

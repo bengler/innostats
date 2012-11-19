@@ -197,8 +197,22 @@ h1 .grantTypeSelector.selected {
   width: 330px;
 }
 
-#lists {
+#grant_list_container {
   z-index: 10;
+}
+
+#grant-list-overflow {
+  width: 90%;
+  margin: 0 auto;
+  background-color: #167;
+  margin-bottom: 100px;  
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px;
+  border: #333 1px solid;
+  font-size: 16px;
+  color: rgba(255,255,255, 0.7);
+  text-shadow: 0 1px 1px rgba(5,5,5,.8);
 }
 
 #grant-list {
@@ -212,7 +226,6 @@ h1 .grantTypeSelector.selected {
   height: 100%;
   border-left: 750px solid transparent;
   overflow: scroll;
-
   position: fixed;
   font-size: smaller;
   clear: both;
@@ -348,8 +361,8 @@ h1 .grantTypeSelector.selected {
 }
 
 #map path {
-  stroke-width: 0.4px;
-  stroke: #333;
+  stroke-width: 0.2px;
+  stroke: #666;
   opacity: 1;
 }
 

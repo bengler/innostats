@@ -213,7 +213,7 @@ var funds = function() {
 
 
     // Render the initial lists.
-    var list = d3.selectAll(".list")
+    var list = d3.selectAll("#inner-grant-list")
         .data([grantList]);
 
     // Renders the specified chart or list.
@@ -246,7 +246,7 @@ var funds = function() {
     };
 
     function grantList(div) {
-      var grants = grantSum.top(200);
+      var grants = grantSum.top(201);
 
       div.each(function() {
         var grant = d3.select(this).selectAll(".grant")
@@ -283,6 +283,16 @@ var funds = function() {
         grant.order();
         grant.exit().remove();
       });
+
+      if (grants.length > 200 ) {
+        d3.select("#grant-list-overflow")
+          .style("display", "block")
+      } else {
+        d3.select("#grant-list-overflow")
+          .style("display", "none")
+      }
+
+
     }
 
     function barChart() {
