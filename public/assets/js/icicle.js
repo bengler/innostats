@@ -5,7 +5,7 @@ window.icicle = function () {
       x = d3.scale.linear().range([0, w]),
       y = d3.scale.linear().range([0, h]);
 
-  var chosenNode, rootNode;
+  var chosenNode, rootNode, partition, partionedTree;
 
   var vis = d3.select("#nace-icicle").append("div")
     .attr("class", "icicleChart")
@@ -50,11 +50,11 @@ window.icicle = function () {
     h = newHeight;
     d3.selectAll('#nace-icicle-container')
       .transition()
-      .duration(200)
+      .duration(400)
       .style("height", h + 40 + "px");
     d3.selectAll('.icicleChart svg')
       .transition()
-      .duration(200)
+      .duration(400)
       .style("height", h + "px");
     x = d3.scale.linear().range([0, w]),
     y = d3.scale.linear().range([0, h]);
@@ -63,7 +63,7 @@ window.icicle = function () {
   function fadeOtherCharts(opacity) {
     d3.select('#right-column')
       .transition()
-      .duration(400)
+      .duration(700)
       .style("opacity", opacity);
     d3.selectAll('#charts')
       .transition()
@@ -73,9 +73,10 @@ window.icicle = function () {
 
   function label(d) {
     var code = d.code;
-    if (code.match(/^0\d$/)) {
-      code = code.charAt(1);
-    }
+    // Seems this bug may come back to bite us in future Chrome revs
+    // if (code.match(/^0\d$/)) {
+    //   code = "0" + code.charAt(1);
+    // }
     var name = naceDescriptions[code]  || "EVERYTHING";
     return name;
   }
@@ -116,11 +117,11 @@ window.icicle = function () {
         .text("reset")
         .style("display", "none");
 
-      var partition = d3.layout.partition()
+      partition = d3.layout.partition()
         .value(naceValue)
         .internal_value(naceValue);
 
-      var partionedTree = partition.nodes(naceHierarchy);
+      partionedTree = partition.nodes(naceHierarchy);
       rootNode = partionedTree[0];
       chosenNode = rootNode;
 
@@ -153,7 +154,15 @@ window.icicle = function () {
 
 
     },
+    selectByCode: function(code) {
+      node = _.find(partionedTree, function(e) { return e.code == code})
+      if (node !== undefined) {
+        this.click(node);
+      };
+    },
     click: function(d) {
+      console.info(d);
+
       if (d !== rootNode) {
         if (chosenNode == rootNode) {
           d3.select("#nace-icicle-container .title a")
@@ -173,19 +182,22 @@ window.icicle = function () {
     },
     update: function() {
       if (all.value() === 0) {
-        return
+        return;
       }
 
       if (chosenNode === undefined) {
-        return
+        return;
       }
 
-      var partition = d3.layout.partition()
+      d = chosenNode;
+
+      partition = d3.layout.partition()
         .value(naceValue)
         .internal_value(naceValue);
 
-      d = chosenNode;
-      vis.selectAll("g").data(partition.nodes(naceHierarchy), function(d) { return d["case"]; });
+      partionedTree = partition.nodes(naceHierarchy);
+
+      vis.selectAll("g").data(partionedTree, function(d) { return d["case"]; });
 
       kx = (d.y ? w - 40 : w) / (1 - d.y);
       ky = h / d.dx;
@@ -195,7 +207,7 @@ window.icicle = function () {
       var g = vis.selectAll("g");
 
       var t = g.transition()
-          .duration(600)
+          .duration(400)
           .attr("transform", function(d) { return "translate(" + x(d.y) + "," + y(d.x) + ")"; });
 
       t.select("rect")

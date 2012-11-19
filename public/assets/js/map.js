@@ -10,28 +10,32 @@ window.mapChart = function () {
 
   var brewerScheme = "Greys"
 
-  var map = new L.Map("map", {
-      center: new L.LatLng(65.5,18.283643),
-      zoom: 4,
-      zoomAnimation: false,
-      scrollWheelZoom: false,
-      minZoom: 3,
-      zoomControl: false
-  });
-
-  var zoomControl = new L.Control.Zoom({position: 'topright'});
-  map.addControl(zoomControl);
-
-  var url = "http://a.tiles.mapbox.com/v3/evenwestvang.map-y297i3xr.jsonp";
-  wax.tilejson(url, function(tilejson) {
-    map.addLayer(new wax.leaf.connector(tilejson));
-  });
-
-  var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-      g = svg.append("g")
-          .attr("class", brewerScheme);
+  var map = null, g = null;
 
   return {
+      init: function() {
+        map = new L.Map("map", {
+            center: new L.LatLng(65.5,18.283643),
+            zoom: 4,
+            zoomAnimation: false,
+            scrollWheelZoom: false,
+            minZoom: 3,
+            zoomControl: false
+        });
+
+        var zoomControl = new L.Control.Zoom({position: 'topright'});
+        map.addControl(zoomControl);
+
+        var url = "http://a.tiles.mapbox.com/v3/evenwestvang.map-y297i3xr.jsonp";
+        wax.tilejson(url, function(tilejson) {
+          map.addLayer(new wax.leaf.connector(tilejson));
+        });
+
+        svg = d3.select(map.getPanes().overlayPane).append("svg");
+        g = svg.append("g")
+                .attr("class", brewerScheme);
+
+      },
       load: function() {
         var that = this;
         d3.json("sanitized_data/municipalities_no_oceans.json", function(json) {
@@ -79,6 +83,8 @@ window.mapChart = function () {
             // .append("svg:title")
             //   .text(function(d) { return d.properties.NAVN; });
 
+          window.mapFeatures = feature;
+
           map.on("viewreset", reset);
           reset();
 
@@ -111,6 +117,11 @@ window.mapChart = function () {
         }
       },
 
+      filterByMunicipalityID: function(id) {
+        el = d3.select("#map #m" + id);
+        this.filterByMunicipality(el.datum(), 0, el[0][0]);
+      },
+
       filterByMunicipality: function(d, i, el) {
         selectedMunicipality = d;
         d3.select("#map-container .title #filtered-municipality")[0][0].innerHTML = "(" + d.properties.NAVN + ")";
@@ -134,4 +145,3 @@ window.mapChart = function () {
       }
   };
 }();
-mapChart.load();

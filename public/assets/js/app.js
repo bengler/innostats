@@ -8,16 +8,57 @@ d3.json("sanitized_data/NaceRev2DescAndHierarchyPruned.json", function(json) {
   $.when(grantsLoaded).then(function() { icicle.init(); });
 });
 
+function toggle() {
+  $(".example_list").toggle(); 
+  $(".example_link").toggleClass("enabled"); 
+}
+
+$(".example_link").click(function() { 
+  toggle();
+});
+
+$(".example1").click(function() {
+  resetAll();
+  icicle.selectByCode("J");
+});
+
+$(".example2").click(function() {
+  resetAll();
+  charts[1].filter([new Date(2010, 0, 1), new Date(2011, 12, 21)]);
+  icicle.selectByCode("03.2");
+});
+
+$(".example3").click(function() {
+  resetAll();
+  icicle.selectByCode("58.13");
+  mapChart.filterByMunicipalityID(1902);
+
+});
+
+$(".example4").click(function() {
+  resetAll();
+  icicle.selectByCode("16.21");
+  charts[0].filter([1000, 60000]);
+  mapChart.filterByMunicipalityID(426);
+});
+
+$(".example5").click(function() {
+  toggle();
+  resetAll();
+  renderAll();
+});
+
+
 $.when(grantsLoaded, mapLoaded).then(function() { renderAll(); });
 
 var funds = function() {
 
-
+  // Progress meter
   var width = 960,
       height = 500,
       twoPi = 2 * Math.PI,
       progress = 0,
-      total = 1308573, // must be hard-coded if server doesn't report Content-Length
+      total = 2700000,
       formatPercent = d3.format(".0%");
 
   var arc = d3.svg.arc()
@@ -48,6 +89,7 @@ var funds = function() {
 
   var chartWidth = 330;
 
+  // Load funds
   d3.csv("sanitized_data/funds.csv")
     .on("progress", function() {
       var i = d3.interpolate(progress, d3.event.loaded / total);
@@ -61,6 +103,10 @@ var funds = function() {
     })
   .get(function(error, grants) {
     meter.transition().delay(250).attr("transform", "scale(0)");
+
+    mapChart.init();
+    mapChart.load();
+
 
     // Various formatters
     var formatNumber = d3.format(",d"),
@@ -135,11 +181,10 @@ var funds = function() {
       );
 
     window.resetAll = function() {
-      municipality.filterAll();
-      grantSum.filterAll();
-      date.filterAll();
-      naceCodeSum.filterAll();
-      grantKind.filterAll();
+      charts[0].filter(null);
+      charts[1].filter(null);
+      icicle.resetIcicle();
+      mapChart.resetMapFilter();
     };
 
     var naceCodeKeys = {},
@@ -198,6 +243,8 @@ var funds = function() {
           .domain([new Date(2005, 0, 1), new Date(2011, 12, 21)])
           .rangeRound([0, chartWidth]))
     ];
+
+    window.charts = charts;
 
     var chart = d3.selectAll(".chart")
         .data(charts)

@@ -5,6 +5,11 @@ body {
   margin: 0px auto;
   translate3d(0,0,0);
   height: 1000px;
+  color: #aaa;
+}
+
+a {
+  color: #aaa;
 }
 
 header {
@@ -15,6 +20,57 @@ header {
 }
 
 
+.tell-me-more {
+  position: fixed;
+  top: 5px;
+  right: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.tell-me-more a {
+  text-decoration: none;
+}
+
+.tell-me-more ul li {
+  list-style: none;
+  float: left;
+  padding-right: 20px;
+}
+
+.example_link {
+  position: relative;
+}
+
+.example_link.enabled a {
+  color: #fff;
+}
+
+ul.example_list {
+  right: -10px;
+  position: absolute;
+  margin: 20px 0 0 0px;
+  background-color: black;
+  padding: 10px;
+  border: 1px solid #333;
+}
+
+ ul.example_list li {
+  font-weight: 300;
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0 5px 0 5px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+ul.example_list li.heading {
+  font-weight: 300;
+  margin-bottom: 16px;
+  color: #eee;
+}
 
 #controls {
   top: 40px;
@@ -86,7 +142,7 @@ h1 .grantTypeSelector.selected {
 #totals.title {
   position: fixed;
   left: 740px;
-  top: 45px;
+  top: 72px;
   color: #fff;
   width: 400px;
   font-weight: 800;
@@ -219,7 +275,7 @@ h1 .grantTypeSelector.selected {
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  top: 72px;
+  top: 96px;
   right: 0;
   width: 100%;
   z-index: 10;
