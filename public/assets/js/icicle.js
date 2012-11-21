@@ -151,8 +151,6 @@ window.icicle = function () {
         .transition()
           .duration(200)
           .style("opacity", "1");
-
-
     },
     selectByCode: function(code) {
       node = _.find(partionedTree, function(e) { return e.code == code})
@@ -161,8 +159,6 @@ window.icicle = function () {
       };
     },
     click: function(d) {
-      console.info(d);
-
       if (d !== rootNode) {
         if (chosenNode == rootNode) {
           d3.select("#nace-icicle-container .title a")
@@ -181,6 +177,7 @@ window.icicle = function () {
       this.click(rootNode);
     },
     update: function() {
+
       if (all.value() === 0) {
         return;
       }
@@ -196,7 +193,6 @@ window.icicle = function () {
         .internal_value(naceValue);
 
       partionedTree = partition.nodes(naceHierarchy);
-
       vis.selectAll("g").data(partionedTree, function(d) { return d["case"]; });
 
       kx = (d.y ? w - 40 : w) / (1 - d.y);

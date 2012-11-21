@@ -39,8 +39,17 @@ header {
   padding-right: 20px;
 }
 
+input[name=filter_text] {
+  background-color: #333;
+  border: 1px solid #666;
+  padding: 2px;
+  border-radius: 2px;
+  margin-top: -3px;
+  color: #eee;
+  text-transform: uppercase;
+}
+
 .example_link {
-  position: relative;
 }
 
 .example_link.enabled a {
@@ -48,28 +57,42 @@ header {
 }
 
 ul.example_list {
-  right: -10px;
+  z-index: 65535;
   position: absolute;
-  margin: 20px 0 0 0px;
-  background-color: black;
+  margin: 0;
+  width: 100%;
+  margin-top: 30%;
   padding: 10px;
   border: 1px solid #333;
+  background-color: #000;
+  box-shadow: 0px 0px 80px #000;
 }
 
  ul.example_list li {
+  background-color: black;
   font-weight: 300;
   display: block;
   list-style: none;
-  margin: 0;
+  margin: 0 auto;
   padding: 0 5px 0 5px;
   font-weight: 500;
-  margin-bottom: 5px;
+  margin-bottom: 12px;
+  max-width: 600px;
 }
 
 ul.example_list li.heading {
   font-weight: 300;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   color: #eee;
+  font-weight: 600;
+}
+
+ul.example_list a {
+  text-decoration: none;
+}
+
+ul.example_list li a:hover {
+  text-decoration: underline;
 }
 
 #controls {

@@ -20,19 +20,21 @@ $(".example_link").click(function() {
 $(".example1").click(function() {
   resetAll();
   icicle.selectByCode("J");
+  toggle();
 });
 
 $(".example2").click(function() {
   resetAll();
   charts[1].filter([new Date(2010, 0, 1), new Date(2011, 12, 21)]);
   icicle.selectByCode("03.2");
+  toggle();
 });
 
 $(".example3").click(function() {
   resetAll();
   icicle.selectByCode("58.13");
   mapChart.filterByMunicipalityID(1902);
-
+  toggle();
 });
 
 $(".example4").click(function() {
@@ -40,6 +42,7 @@ $(".example4").click(function() {
   icicle.selectByCode("16.21");
   charts[0].filter([1000, 60000]);
   mapChart.filterByMunicipalityID(426);
+  toggle();
 });
 
 $(".example5").click(function() {
@@ -48,6 +51,18 @@ $(".example5").click(function() {
   renderAll();
 });
 
+$("input[name=filter_text]").keyup(function() {
+  var input = ($("input[name=filter_text]").val());
+  var expression = ""
+  for(var i = 0; i < input.length; i++ ) { 
+    expression += input.charAt(i) + "+.?" 
+  }
+  re = new RegExp(expression, "i");
+  clientNameFilter.filter(function(val, i) { 
+    return re.test(val) 
+  } ); 
+  renderAll();
+});
 
 $.when(grantsLoaded, mapLoaded).then(function() { renderAll(); });
 
@@ -107,7 +122,6 @@ var funds = function() {
     mapChart.init();
     mapChart.load();
 
-
     // Various formatters
     var formatNumber = d3.format(",d"),
         formatChange = d3.format("+,d"),
@@ -129,6 +143,7 @@ var funds = function() {
     // Create the crossfilter for the relevant dimensions and groups.
     var grant = crossfilter(grants),
       all = grant.groupAll(),
+      clientName = grant.dimension(function(d) { return d.client; }),
       municipality = grant.dimension(function(d) { return d.muniNr; }),
       municipalities = municipality.group(),
       grantSum = grant.dimension(function(d) { return Math.min(1000000000, d.grant); }),
@@ -201,6 +216,7 @@ var funds = function() {
     window.municipality = municipality;
     window.naceCodeKeys = naceCodeKeys;
     window.naceCodeSum = naceCodeSum;
+    window.clientNameFilter = clientName;
     window.all = all;
 
     // for now show only grants
@@ -232,8 +248,7 @@ var funds = function() {
         .axis(d3.svg.axis().orient("bottom").tickFormat(d3.scale.log().tickFormat(1, formatNumber), 10))
         .x(d3.scale.log()
           .domain([800, 250000000])
-          .range([0, chartWidth]))
-          .filter([800, 250000000]),
+          .range([0, chartWidth])),
 
       barChart()
           .dimension(date)
@@ -293,7 +308,7 @@ var funds = function() {
     };
 
     function grantList(div) {
-      var grants = grantSum.top(201);
+      var grants = grantSum.top(101);
 
       div.each(function() {
         var grant = d3.select(this).selectAll(".grant")
@@ -331,7 +346,7 @@ var funds = function() {
         grant.exit().remove();
       });
 
-      if (grants.length > 200 ) {
+      if (grants.length > 100 ) {
         d3.select("#grant-list-overflow")
           .style("display", "block")
       } else {

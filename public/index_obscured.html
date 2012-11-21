@@ -5,12 +5,8 @@
 <link href="assets/css/leaflet.css" rel="stylesheet" type="text/css" />
 <link href="assets/css/colorbrewer.css" rel="stylesheet" type="text/css" />
 <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
-<!--
-<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
- -->
-<div id="body">
 
+<div id="body">
   <header>
     <h1>Innovation Norway
       <span class="grantTypeSelector selected" id="grantSelector">Grants</span>
@@ -19,7 +15,12 @@
     </h1>
     <div class="tell-me-more">
       <ul>
+        <li><input placeholder="SEARCH…" type="text" name="filter_text"></li>
         <li class="example_link"><a href="#">Examples</a></li>
+        <li><a href="http://vis.bengler.no/projects/innostats">Documentation</a></li>
+      </ul>
+    </div>
+  </header>
           <ul class="example_list" style="display:none">
             <li class="heading">Try the following sample filters</li>
             <li class="example1"><a href="#">Information and Communication</a></li>
@@ -28,10 +29,7 @@
             <li class="example4"><a href="#">Less than 60.000 NOK for fibreboard production in Våler</a></li>
             <li class="example5"><a href="#">Clear all filters</a></li>
           </ul>
-        <li><a href="http://vis.bengler.no/projects/innostats">Documentation</a></li>
-      </ul>
-    </div>
-  </header>
+
 
   <div id="totals" class="title">
     <span id="active">-</span> selected – 
