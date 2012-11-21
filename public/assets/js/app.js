@@ -73,7 +73,7 @@ var funds = function() {
       height = 500,
       twoPi = 2 * Math.PI,
       progress = 0,
-      total = 2700000,
+      total = 953000,
       formatPercent = d3.format(".0%");
 
   var arc = d3.svg.arc()
