@@ -53,6 +53,11 @@ $(".example5").click(function() {
 
 $("input[name=filter_text]").keyup(function() {
   var input = ($("input[name=filter_text]").val());
+  if (input !== "") {
+    $(".tell-me-more .reset").show();
+  } else {
+    $(".tell-me-more .reset").hide();
+  }
   var expression = ""
   for(var i = 0; i < input.length; i++ ) { 
     expression += input.charAt(i) + "+.?" 
@@ -61,6 +66,13 @@ $("input[name=filter_text]").keyup(function() {
   clientNameFilter.filter(function(val, i) { 
     return re.test(val) 
   } ); 
+  renderAll();
+});
+
+$(".tell-me-more .reset").click(function() {
+  $("input[name=filter_text]").val("")
+  $(".tell-me-more .reset").hide();
+  clientNameFilter.filterAll();
   renderAll();
 });
 
@@ -196,6 +208,7 @@ var funds = function() {
       );
 
     window.resetAll = function() {
+      $("input[name=filter_text]").val("")
       charts[0].filter(null);
       charts[1].filter(null);
       icicle.resetIcicle();
@@ -216,6 +229,7 @@ var funds = function() {
     window.municipality = municipality;
     window.naceCodeKeys = naceCodeKeys;
     window.naceCodeSum = naceCodeSum;
+    window.naceCodeSums = naceCodeSums;
     window.clientNameFilter = clientName;
     window.all = all;
 
@@ -285,6 +299,7 @@ var funds = function() {
 
     // Whenever the brush moves, re-render everything.
     function renderAll() {
+      naceCodeSums.resetMany();
       chart.each(render);
       list.each(render);
       d3.select("#active").text(formatNumber(all.value()));

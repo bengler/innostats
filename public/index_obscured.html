@@ -15,24 +15,27 @@
     </h1>
     <div class="tell-me-more">
       <ul>
-        <li><input placeholder="SEARCH…" type="text" name="filter_text"></li>
+        <li class="filter_block">
+          <a href="#"><div style="display: none" class="reset">RESET</div></a>
+          <input placeholder="SEARCH…" type="text" name="filter_text">
+        </li>
         <li class="example_link"><a href="#">Examples</a></li>
         <li><a href="http://vis.bengler.no/projects/innostats">Documentation</a></li>
       </ul>
     </div>
   </header>
-          <ul class="example_list" style="display:none">
-            <li class="heading">Try the following sample filters</li>
-            <li class="example1"><a href="#">Information and Communication</a></li>
-            <li class="example2"><a href="#">Acquaculture since 2010</a></li>
-            <li class="example3"><a href="#">Newspaper publishing in Tromsø</a></li>
-            <li class="example4"><a href="#">Less than 60.000 NOK for fibreboard production in Våler</a></li>
-            <li class="example5"><a href="#">Clear all filters</a></li>
-          </ul>
 
+  <ul class="example_list" style="display:none">
+    <li class="heading">Try the following sample filters</li>
+    <li class="example1"><a href="#">Information and Communication</a></li>
+    <li class="example2"><a href="#">Acquaculture since 2010</a></li>
+    <li class="example3"><a href="#">Newspaper publishing in Tromsø</a></li>
+    <li class="example4"><a href="#">Less than 60.000 NOK to manufacture of veneer sheets and wood-based panels in Våler</a></li>
+    <li class="example5"><a href="#">Clear all filters</a></li>
+  </ul>
 
   <div id="totals" class="title">
-    <span id="active">-</span> selected – 
+    <span id="active">-</span> selected –
     <span id="sum-total"></span> NOK
   </div>
 
@@ -66,9 +69,8 @@
     <div id="grant-list" class="list">
       <div id="inner-grant-list">
       </div>
-      <div style="display: none" id="grant-list-overflow">Showing first 200 entries.</div>
+      <div style="display: none" id="grant-list-overflow">Showing first 100 entries sorted by grant or loan amount.</div>
     </div>
-
   </div>
 
 </div>

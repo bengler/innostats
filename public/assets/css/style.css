@@ -39,6 +39,10 @@ header {
   padding-right: 20px;
 }
 
+.tell-me-more ul li.filter_block {
+  width: 170px;
+}
+
 input[name=filter_text] {
   background-color: #333;
   border: 1px solid #666;
@@ -47,6 +51,13 @@ input[name=filter_text] {
   margin-top: -3px;
   color: #eee;
   text-transform: uppercase;
+  display: inline;
+  float: right;
+}
+
+.tell-me-more .reset {
+  display: inline;
+  position: relative;
 }
 
 .example_link {
