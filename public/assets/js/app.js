@@ -15,74 +15,6 @@ d3.json("sanitized_data/NaceRev2DescAndHierarchyPruned.json", function(json) {
   $.when(grantsLoaded).then(function() { icicle.init(); });
 });
 
-function toggle() {
-  $(".example_list").toggle(); 
-  $(".example_link").toggleClass("enabled"); 
-}
-
-$(".example_link").click(function() { 
-  toggle();
-});
-
-$(".example1").click(function() {
-  resetAll();
-  icicle.selectByCode("J");
-  toggle();
-});
-
-$(".example2").click(function() {
-  resetAll();
-  charts[1].filter([new Date(2010, 0, 1), new Date(2011, 12, 21)]);
-  icicle.selectByCode("03.2");
-  toggle();
-});
-
-$(".example3").click(function() {
-  resetAll();
-  icicle.selectByCode("58.13");
-  mapChart.filterByMunicipalityID(1902);
-  toggle();
-});
-
-$(".example4").click(function() {
-  resetAll();
-  icicle.selectByCode("16.21");
-  charts[0].filter([1000, 60000]);
-  mapChart.filterByMunicipalityID(426);
-  toggle();
-});
-
-$(".example5").click(function() {
-  toggle();
-  resetAll();
-  renderAll();
-});
-
-$("input[name=filter_text]").keyup(function() {
-  var input = ($("input[name=filter_text]").val());
-  if (input !== "") {
-    $(".tell-me-more .reset").show();
-  } else {
-    $(".tell-me-more .reset").hide();
-  }
-  var expression = ""
-  for(var i = 0; i < input.length; i++ ) { 
-    expression += input.charAt(i) + "+.?" 
-  }
-  re = new RegExp(expression, "i");
-  clientNameFilter.filter(function(val, i) { 
-    return re.test(val) 
-  } ); 
-  renderAll();
-});
-
-$(".tell-me-more .reset").click(function() {
-  $("input[name=filter_text]").val("")
-  $(".tell-me-more .reset").hide();
-  clientNameFilter.filterAll();
-  renderAll();
-});
-
 $.when(grantsLoaded, mapLoaded).then(function() { renderAll(); });
 
 var funds = function() {
@@ -154,6 +86,7 @@ var funds = function() {
       d.grant = +d.grant;
       d.date = formatDateInput.parse(d.date);
       d.isLoan = d.grantKind !== "Tilskudd";
+      d.isGuarantee = d.grantKind == "Garanti";
       d.muniNr = +d.municipalityNr;
       d.naceDesc = naceDescriptions[d.nace];
       d.index = i;
@@ -234,6 +167,7 @@ var funds = function() {
 
     window.resetAll = function() {
       $("input[name=filter_text]").val("")
+      $(".tell-me-more .reset").hide();
       charts[0].filter(null);
       charts[1].filter(null);
       icicle.resetIcicle();
@@ -350,6 +284,12 @@ var funds = function() {
     function grantList(div) {
       var grants = grantSum.top(101);
 
+      var grantKind = function(d) {
+        if (!d.isLoan) return "grant";
+        if (!d.isGuarantee) return "loan";
+        return "Guarantee";
+      }
+
       div.each(function() {
         var grant = d3.select(this).selectAll(".grant")
             .data(grants, function(d) { return d.index; });
@@ -366,13 +306,12 @@ var funds = function() {
 
         grantEnter.append("div")
             .attr("class", "grant-sum")
-            .classed("is-loan", function(d) { return d.isLoan; })
             .text(function(d) { return formatNumber(d.grant) + ",-"; });
 
         grantEnter.append("div")
             .attr("class", "loan-status")
-            .classed("is-loan", function(d) { return d.isLoan; })
-            .text(function(d) { return d.isLoan ? "loan" : "grant"; });
+            .classed("is-guarantee", function(d) { return d.isGuarantee; })
+            .text(function(d) { return grantKind(d); });
 
         grantEnter.append("div")
             .attr("class", "nace-code")
@@ -605,4 +544,75 @@ var funds = function() {
 
   });
 }();
+
+function toggle() {
+  $(".example_list").toggle(); 
+  $(".example_link").toggleClass("enabled"); 
+}
+
+$(".example_link").click(function() { 
+  toggle();
+});
+
+$(".example1").click(function() {
+  resetAll();
+  icicle.selectByCode("J");
+  toggle();
+});
+
+$(".example2").click(function() {
+  resetAll();
+  charts[1].filter([new Date(2010, 0, 1), new Date(2011, 12, 21)]);
+  icicle.selectByCode("03.2");
+  toggle();
+});
+
+$(".example3").click(function() {
+  resetAll();
+  icicle.selectByCode("58.13");
+  mapChart.filterByMunicipalityID(1902);
+  toggle();
+});
+
+$(".example4").click(function() {
+  resetAll();
+  icicle.selectByCode("16.21");
+  charts[0].filter([1000, 60000]);
+  mapChart.filterByMunicipalityID(426);
+  toggle();
+});
+
+$(".example5").click(function() {
+  toggle();
+  resetAll();
+  renderAll();
+});
+
+$("input[name=filter_text]").keyup(function() {
+  var input = ($("input[name=filter_text]").val());
+  if (input !== "") {
+    $(".tell-me-more .reset").show();
+  } else {
+    $(".tell-me-more .reset").hide();
+  }
+  var expression = ""
+  for(var i = 0; i < input.length; i++ ) { 
+    expression += input.charAt(i) + "+.?" 
+  }
+  re = new RegExp(expression, "i");
+  clientNameFilter.filter(function(val, i) { 
+    return re.test(val) 
+  } ); 
+  renderAll();
+});
+
+$(".tell-me-more .reset").click(function() {
+  $("input[name=filter_text]").val("")
+  $(".tell-me-more .reset").hide();
+  clientNameFilter.filterAll();
+  renderAll();
+});
+
+
+
 })();
