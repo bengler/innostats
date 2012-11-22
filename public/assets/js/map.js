@@ -8,7 +8,7 @@ window.mapChart = function () {
     .text("reset")
     .style("display", "none");
 
-  var brewerScheme = "Greys"
+  var brewerScheme = "RdYlGn"
 
   var map = null, g = null;
 
@@ -99,14 +99,28 @@ window.mapChart = function () {
           n = municipalityList.length,
           d = 0,
           path = 0,
-          colorClass = 0;
+          colorClass = 0,
+          val = 0;
+
+        var max = 0
+        var min = 0
 
         while (++i < n) {
           d = municipalityList[i];
           path = d3.select("#m" + d.key);
-          colorClass = "q" + Math.min(8,~~(9 - (d.value * 9 / maxGrants))) + "-9";
+
+          if (d.value == 0) {
+            colorClass = "black"
+            console.info("yargh!")
+          } else {
+            val = Math.min(9,~~(9 - (d.value * 9 / maxGrants)));
+            max = Math.max(max, val)
+            min = Math.min(min, val)
+            colorClass = "q" + val + "-9";
+          }
           path.attr("class", colorClass);
         }
+        console.info("Max:" + max + " Min:" + min)
       },
 
       toggleFilter: function(d, i, el) {
@@ -129,7 +143,6 @@ window.mapChart = function () {
         d3.selectAll("#map path").style("fill", null);
         d3.select(el).style("fill", "#c44");
         d3.select("#map-container .title a").style("display", null);
-
         window.municipality.filterExact(d.properties.KOMM);
         window.renderAll();
       },

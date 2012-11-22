@@ -44,8 +44,8 @@ header {
 }
 
 input[name=filter_text] {
-  background-color: #333;
-  border: 1px solid #666;
+  background-color: #222;
+  border: 1px solid #555;
   padding: 2px;
   border-radius: 2px;
   margin-top: -3px;
@@ -53,6 +53,16 @@ input[name=filter_text] {
   text-transform: uppercase;
   display: inline;
   float: right;
+}
+
+input::-webkit-input-placeholder {
+    color:    #666;
+}
+input:-moz-placeholder {
+    color:    #666;
+}
+input:-ms-input-placeholder {
+    color:    #666;
 }
 
 .tell-me-more .reset {
@@ -490,7 +500,6 @@ h1 .grantTypeSelector.selected {
 
 .toggleIcicleHeight {
   cursor: pointer;
-  color: #eee;
 }
 
 .icicleChart {
