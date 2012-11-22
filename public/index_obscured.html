@@ -25,6 +25,10 @@
     </div>
   </header>
 
+  <div class="svg_missing_warning" style="display:none">
+    Your browser doesn't seem to support the SVG standard. Please install <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a> or <a href="http://www.apple.com/no/safari/">Safari</a>. For best performance get <a href="www.google.com/chrome">Chrome</a>.
+  </div>
+
   <ul class="example_list" style="display:none">
     <li class="heading">Try the following sample filters</li>
     <li class="example1"><a href="#">Information and Communication</a></li>
@@ -69,11 +73,12 @@
     <div id="grant-list" class="list">
       <div id="inner-grant-list">
       </div>
-      <div style="display: none" id="grant-list-overflow">Showing first 100 entries sorted by grant or loan amount.</div>
+      <div style="display: none" id="grant-list-overflow">Showing first 100 entries sorted by grant or loan amount</div>
     </div>
   </div>
 
 </div>
+<script src="assets/js/modernizr.min.js"></script>
 <script src="assets/js/jquery-1.7.2.min.js"></script>
 <script src="assets/js/crossfilter.min.js"></script>
 <script src="assets/js/colorbrewer.js"></script>

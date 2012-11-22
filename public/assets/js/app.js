@@ -1,6 +1,13 @@
+(function() {
 
-var grantsLoaded = jQuery.Deferred();
-var mapLoaded = jQuery.Deferred();
+if (!Modernizr.svg) {
+  $("header, footer").hide();
+  $(".svg_missing_warning").show();
+  return
+}
+
+window.grantsLoaded = jQuery.Deferred();
+window.mapLoaded = jQuery.Deferred();
 
 d3.json("sanitized_data/NaceRev2DescAndHierarchyPruned.json", function(json) {
   window.naceHierarchy = json.naceHierarchy;
@@ -580,3 +587,4 @@ var funds = function() {
 
   });
 }();
+})();
