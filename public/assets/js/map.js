@@ -78,14 +78,15 @@ window.mapChart = function () {
               d3.select(this)
                 .style("stroke-width", "1.0")
                 .style("stroke", "#fff")
-                .append("svg:title")
-                  .text(function(d) { return d.properties.NAVN; });
-
               d3.event.x;
             })
             .on("mouseout", function(d,i) {
               d3.select(this).style("stroke", "#000");
               d3.select(this).style("stroke-width", "0.3"); });
+
+          g.selectAll("path")
+            .append("svg:title")
+            .text(function(d) { return d.properties.NAVN; })
 
           window.mapFeatures = feature;
 
