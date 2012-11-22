@@ -164,11 +164,29 @@ var funds = function() {
       all = grant.groupAll(),
       clientName = grant.dimension(function(d) { return d.client; }),
       municipality = grant.dimension(function(d) { return d.muniNr; }),
-      municipalities = municipality.group(),
+      municipalities = municipality.group().reduce(
+        function reduceAdd(p,v) {
+          return p + v.grant;
+        },
+        function reduceRemove(p,v) {
+          return p - v.grant;
+        },
+        function reduceInitial() {
+          return 0
+        }),
       grantSum = grant.dimension(function(d) { return Math.min(1000000000, d.grant); }),
       grantSums = grantSum.group(function(d) { return Math.floor(d / 5000) * 5000; }),
       date = grant.dimension(function(d) { return d3.time.month(d.date); }),
-      dates = date.group(),
+      dates = date.group().reduce(
+        function reduceAdd(p,v) {
+          return p + v.grant;
+        },
+        function reduceRemove(p,v) {
+          return p - v.grant;
+        },
+        function reduceInitial() {
+          return 0
+        }),
       grantKind = grant.dimension(function(d) { return +d.isLoan; }),
       grantKinds = grantKind.group(),
       naceCodeSum = grant.dimension(function(d) { return d.nace; }),

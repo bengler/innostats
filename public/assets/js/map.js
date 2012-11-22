@@ -102,25 +102,17 @@ window.mapChart = function () {
           colorClass = 0,
           val = 0;
 
-        var max = 0
-        var min = 0
-
         while (++i < n) {
           d = municipalityList[i];
           path = d3.select("#m" + d.key);
-
           if (d.value == 0) {
             colorClass = "black"
-            console.info("yargh!")
           } else {
             val = Math.min(9,~~(9 - (d.value * 9 / maxGrants)));
-            max = Math.max(max, val)
-            min = Math.min(min, val)
             colorClass = "q" + val + "-9";
           }
           path.attr("class", colorClass);
         }
-        console.info("Max:" + max + " Min:" + min)
       },
 
       toggleFilter: function(d, i, el) {
