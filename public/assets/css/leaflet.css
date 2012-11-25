@@ -194,11 +194,14 @@
 	}
 
 .leaflet-container .leaflet-control-attribution {
-	color: #888;
 	background-color: rgba(0, 0, 0, 0.7);
 	margin: 0;
 	z-index: 0;
- }
+    }
+
+.leaflet-container .leaflet-control-attribution a {
+	color: #666;
+}
 
 .leaflet-control-attribution,
 .leaflet-control-scale-line {

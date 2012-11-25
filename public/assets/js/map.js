@@ -9,6 +9,7 @@ window.mapChart = function () {
     .style("display", "none");
 
   var brewerScheme = "RdYlGn"
+  // var brewerScheme = "Greens"
 
   var map = null, g = null;
 
@@ -22,6 +23,8 @@ window.mapChart = function () {
             minZoom: 3,
             zoomControl: false
         });
+
+        window.map = map
 
         var zoomControl = new L.Control.Zoom({position: 'topright'});
         map.addControl(zoomControl);
@@ -71,7 +74,7 @@ window.mapChart = function () {
               .attr("d", path)
               .style("class", "white")
               .attr("id", function(d) { return "m" + (+d.properties.KOMM); })
-            .on("click", function(d,i) {
+            .on("mouseup", function(d,i) {
               that.toggleFilter(d,i, this);
             })
             .on("mouseover", function(d,i) {
@@ -138,7 +141,7 @@ window.mapChart = function () {
         d3.select("#map-container .title #filtered-municipality")[0][0].innerHTML = "(" + d.properties.NAVN + ")";
         g.attr("class", "Greys");
         d3.selectAll("#map path").style("fill", null);
-        d3.select(el).style("fill", "#c44");
+        d3.select(el).style("fill", "#48a");
         d3.select("#map-container .title a").style("display", null);
         window.municipality.filterExact(d.properties.KOMM);
         window.renderAll();
